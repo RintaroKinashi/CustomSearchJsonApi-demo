@@ -8,12 +8,17 @@
     <div>
         <form action="{{ route('text_search') }}" method="POST">
             @csrf
+            <select name="language" id="language">
+                @foreach(trans('search_options') as $value => $label)
+                    <option value="{{ $value }}">{{ $label }}</option>
+                @endforeach
+            </select>
             <input type="text" name="query" placeholder="キーワードを入力してください">
             <button type="submit">検索</button>
         </form>
     </div>
     @if(isset($results))
-        <h2>- 検索結果 -</h2>
+        <h2>- 「{{ $results['query'] }}」の検索結果 -</h2>
         <ul>
             @foreach($results['items'] as $item)
                 <li>
