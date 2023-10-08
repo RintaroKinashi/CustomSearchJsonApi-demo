@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Http;
 
 class GoogleSearchController extends Controller
@@ -10,14 +10,19 @@ class GoogleSearchController extends Controller
     /**
      * テキスト検索を行う
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\SearchRequest  $request
      * @return \Illuminate\View\View
      */
-    public function text(Request $request)
+    public function text(SearchRequest $request)
     {
         $apiKey = config('googleSearch.api_key');
         $searchEngineId = config('googleSearch.engine_id');
-        $query = $request->query('query');
+        $query = mb_substr(
+            $request->input('query'),
+            0,
+            config('googleSearch.max_length_in_google_search'),
+            'UTF-8'
+        );
         $language = $request->query('language', trans('search_options.lang_ja'));
 
         // MEMO: クエリパラメータに関しては以下を参照
