@@ -12,13 +12,16 @@
             @csrf
             <select name="language" id="language">
                 @foreach(trans('search_options') as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
+                    <option value="{{ $value }}" @if($language === $value) selected @endif>
+                        {{ $label }}
+                    </option>
                 @endforeach
             </select>
             <input
                 type="text"
                 name="query"
                 placeholder="キーワードを入力してください"
+                value="{{ $query ?? '' }}"
                 maxlength={{config('googleSearch.max_length_in_google_search')}}
             >
             <button type="submit">検索</button>
@@ -32,15 +35,25 @@
             @endforeach
         </ul>
     @elseif(isset($results))
-        <h2>- 「{{ $results['query'] }}」の検索結果 -</h2>
+        <h2>- 「{{ $query }}」の検索結果 -</h2>
         @if(empty($results['items']))
             <p>検索結果がありません</p>
         @else
+            <!-- ページ番号と全ページ数を表示 -->
+            <div class="pagination-info">
+                {{
+                    ceil($results['queries']['request'][0]['startIndex'] / $results['queries']['request'][0]['count']
+                )}}ページ目/
+                {{
+                    ceil($results['searchInformation']['totalResults'] / $results['queries']['request'][0]['count']
+                )}}ページ中
+            </div>
             <ul class="result-list">
                 @foreach($results['items'] as $item)
                     <a href="{{ $item['link'] }}" class="result-link">
                         <li class="result-item">
-                            <h3>{{ $item['title'] }}</h3><p>{{ $item['formattedUrl'] }}</p>
+                            <h3>{{ $item['title'] }}</h3>
+                            <p>{{ $item['formattedUrl'] }}</p>
                             <p class="result-snippet">
                                 {{ $item['snippet'] }}
                             </p>
@@ -48,6 +61,17 @@
                     </a>
                 @endforeach
             </ul>
+            <!-- ページングリンクの生成 -->
+            @if(isset($results['queries']['nextPage']))
+                <div class="pagination">
+                    <a href="{{route('text_search',[
+                        'query' => $query,
+                        'start' => $results['queries']['nextPage'][0]['startIndex'], 'language' => $language]
+                    )}}" class="pagination">
+                        Next Page
+                    </a>
+                </div>
+            @endif
         @endif
     @endif
 </body>

@@ -24,6 +24,7 @@ class GoogleSearchController extends Controller
             'UTF-8'
         );
         $language = $request->query('language', trans('search_options.lang_ja'));
+        $start = $request->input('start', 1);
 
         // MEMO: クエリパラメータに関しては以下を参照
         // @see: https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?hl=ja
@@ -32,10 +33,10 @@ class GoogleSearchController extends Controller
             'cx' => $searchEngineId,
             'q' => $query,
             'lr' => $language,
+            'start' => $start,
         ]);
 
         $results = $response->json();
-        $results['query'] = $query;
         // snippetキーが存在しない結果を除外
         if (isset($results['items'])) {
             $filteredItems = array_filter($results['items'], function ($item) {
@@ -43,6 +44,7 @@ class GoogleSearchController extends Controller
             });
             $results['items'] = array_values($filteredItems);
         }
-        return view('googleSearch', compact('results'));
+        $searchOptions = trans('search_options');
+        return view('googleSearch', compact('results', 'query', 'start', 'language', 'searchOptions'));
     }
 }

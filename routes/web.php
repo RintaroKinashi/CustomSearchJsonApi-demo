@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('googleSearch');
+    $language = trans('search_options.lang_ja');
+    return view('googleSearch', compact('language'));
 });
 Route::get(
     '/google_search',
