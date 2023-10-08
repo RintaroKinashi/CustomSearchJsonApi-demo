@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>GoogleSearch</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
     <!-- 検索フォーム -->
@@ -25,7 +26,7 @@
     </div>
     <!-- 検索結果表示 -->
     @if($errors->any())
-        <ul>
+        <ul class="result-list">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -35,12 +36,16 @@
         @if(empty($results['items']))
             <p>検索結果がありません</p>
         @else
-            <ul>
+            <ul class="result-list">
                 @foreach($results['items'] as $item)
-                    <li>
-                        <a href="{{ $item['link'] }}">{{ $item['title'] }}</a>
-                        <p>{{ $item['snippet'] }}</p>
-                    </li>
+                    <a href="{{ $item['link'] }}" class="result-link">
+                        <li class="result-item">
+                            <h3>{{ $item['title'] }}</h3><p>{{ $item['formattedUrl'] }}</p>
+                            <p class="result-snippet">
+                                {{ $item['snippet'] }}
+                            </p>
+                        </li>
+                    </a>
                 @endforeach
             </ul>
         @endif
