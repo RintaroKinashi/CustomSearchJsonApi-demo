@@ -17,8 +17,8 @@ class GoogleSearchController extends Controller
     {
         $apiKey = config('googleSearch.api_key');
         $searchEngineId = config('googleSearch.engine_id');
-        $query = $request->input('query');
-        $language = $request->input('language', trans('search_options.lang_ja'));
+        $query = $request->query('query');
+        $language = $request->query('language', trans('search_options.lang_ja'));
 
         // MEMO: クエリパラメータに関しては以下を参照
         // @see: https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list?hl=ja

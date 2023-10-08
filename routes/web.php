@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('googleSearch');
 });
-Route::post(
+Route::get(
     '/google_search',
     'App\Http\Controllers\GoogleSearchController@text'
 )->name('text_search');

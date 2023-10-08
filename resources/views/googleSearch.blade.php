@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <form action="{{ route('text_search') }}" method="POST">
+        <form action="{{ route('text_search') }}" method="GET">
             @csrf
             <select name="language" id="language">
                 @foreach(trans('search_options') as $value => $label)
