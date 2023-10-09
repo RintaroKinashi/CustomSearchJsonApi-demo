@@ -28,6 +28,10 @@ php artisan serve
 - [Custom Search API](https://console.cloud.google.com/apis/api/customsearch.googleapis.com/metrics?project=vital-wavelet-395800)
 - [Programmable Search Engine](https://programmablesearchengine.google.com/controlpanel/create/congrats?cx=f253bcf49d8e94161)
 
+追加する箇所は.envファイルの以下の箇所です。
+
+https://github.com/RintaroKinashi/CustomSearchJsonApi-demo/blob/43697e1ecfe2d321469c45fdd6696560f71be3a8/.env.example#L11-L13
+
 ## 実装内容
 
 ### APIリクエスト部分
