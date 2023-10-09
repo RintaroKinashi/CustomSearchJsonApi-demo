@@ -1,12 +1,12 @@
 ## 概要
 
-Custom Search JSON API を使用し、入力したキーワードでの Google 検索結果を一覧表示する
+[Custom Search JSON API](https://developers.google.com/custom-search/v1/overview?hl=ja) を使用し、入力したキーワードでの Google 検索結果を一覧表示する
 
 ## コンセプト
 
 「シンプルな検索エンジン」を目指しました。
 
-祖母がタブレットで一般的な検索エンジンを使用する際、「押す場所が分からない」と言っていたため、リンクの有効範囲を広げるなどの工夫を行なってみました。
+極度の近視である祖母がタブレットで一般的な検索エンジンを使用する際、「押す場所が分からない」と言っていたことを思い浮かべ、リンクの有効範囲を広げるなどの工夫を行なってみました。
 
 https://github.com/RintaroKinashi/CustomSearchJsonApi-demo/assets/66721669/8e2380fa-6dce-4d53-a109-8a3ff7e77f46
 
