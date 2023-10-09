@@ -32,4 +32,20 @@ class SearchRequest extends FormRequest
             'query.required' => '検索したい文字列を入力してください',
         ];
     }
+
+    /**
+     * バリデーションの前に実行されるバリデーションルール
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (is_null(config('googleSearch.api_key'))) {
+                $validator->errors()->add('apiKey', 'APIキーが設定されていないため、検索を行えません。開発者にお問い合わせください。');
+            }
+
+            if (is_null(config('googleSearch.engine_id'))) {
+                $validator->errors()->add('searchEngineId', '検索エンジンIDが設定されていないため、検索を行えません。開発者にお問い合わせください。');
+            }
+        });
+    }
 }

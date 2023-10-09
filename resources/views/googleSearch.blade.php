@@ -29,7 +29,7 @@
     </div>
     <!-- 検索結果表示 -->
     @if($errors->any())
-        <ul class="result-list">
+        <ul class="error-list">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
