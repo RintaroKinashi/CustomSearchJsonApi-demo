@@ -66,8 +66,9 @@
                 <div class="pagination">
                     <a href="{{route('text_search',[
                         'query' => $query,
-                        'start' => $results['queries']['nextPage'][0]['startIndex'], 'language' => $language]
-                    )}}" class="pagination">
+                        'start' => $results['queries']['nextPage'][0]['startIndex'],
+                        'language' => $language
+                    ])}}" class="pagination">
                         Next Page
                     </a>
                 </div>

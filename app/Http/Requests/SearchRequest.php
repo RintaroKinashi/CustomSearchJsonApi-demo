@@ -29,7 +29,7 @@ class SearchRequest extends FormRequest
     public function messages()
     {
         return [
-            'query.required' => '検索したい文字列を入力してください',
+            'query.required' => trans('Validation_error_msg.query_required'),
         ];
     }
 
@@ -40,11 +40,11 @@ class SearchRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             if (empty(config('googleSearch.api_key'))) {
-                $validator->errors()->add('apiKey', 'APIキーが設定されていないため、検索を行えません。開発者にお問い合わせください。');
+                $validator->errors()->add('apiKey', trans('Validation_error_msg.empty_api_key'));
             }
 
             if (empty(config('googleSearch.engine_id'))) {
-                $validator->errors()->add('searchEngineId', '検索エンジンIDが設定されていないため、検索を行えません。開発者にお問い合わせください。');
+                $validator->errors()->add('searchEngineId', trans('Validation_error_msg.empty_engine_id'));
             }
         });
     }
