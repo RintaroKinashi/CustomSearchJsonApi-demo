@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
             @csrf
             <select name="language" id="language">
                 @foreach(trans('search_options') as $value => $label)
-                    <option value="{{ $value }}" @if($language === $value) selected @endif>
+                    <option value="{{ $value }}" @if(isset($language) && $language === $value) selected @endif>
                         {{ $label }}
                     </option>
                 @endforeach
@@ -22,7 +21,7 @@
                 name="query"
                 placeholder="キーワードを入力してください"
                 value="{{ $query ?? '' }}"
-                maxlength={{config('googleSearch.max_length_in_google_search')}}
+                maxlength="{{ config('googleSearch.max_length_in_google_search') }}"
             >
             <button type="submit">検索</button>
         </form>
@@ -34,7 +33,8 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
-    @elseif(isset($results))
+    @endif
+    @if(isset($results))
         <h2>- 「{{ $query }}」の検索結果 -</h2>
         @if(empty($results['items']))
             <p>検索結果がありません</p>
@@ -64,11 +64,11 @@
             <!-- ページングリンクの生成 -->
             @if(isset($results['queries']['nextPage']))
                 <div class="pagination">
-                    <a href="{{route('text_search',[
+                    <a href="{{ route('text_search', [
                         'query' => $query,
                         'start' => $results['queries']['nextPage'][0]['startIndex'],
-                        'language' => $language
-                    ])}}" class="pagination">
+                        'language' => $language ?? 'lang_ja'
+                    ]) }}" class="pagination">
                         Next Page
                     </a>
                 </div>

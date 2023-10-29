@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
 
 class GoogleSearchControllerTest extends TestCase
@@ -50,6 +51,18 @@ class GoogleSearchControllerTest extends TestCase
                     'searchEngineId' => trans('Validation_error_msg.empty_engine_id'),
                 ]
             );
+    }
+
+    /**
+     * GoogleAPIへのリクエスト時のエラー
+     */
+    public function test_api_error()
+    {
+        Config::set('googleSearch.api_key', 'invalid_key');
+        $response = $this->get(self::makeTextSearchURL());
+
+        $response->assertStatus(200)
+            ->assertSee(config('googleSearch.api_error'));
     }
 
     /**
